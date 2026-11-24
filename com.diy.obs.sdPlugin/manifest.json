@@ -1,0 +1,295 @@
+{
+  "Actions": [
+    {
+      "Name": "Track Volume",
+      "UUID": "com.diy.obs.track",
+      "Icon": "static/list-track.png",
+      "Tooltip": "Volume of an OBS audio input. Knob: turn to change, press to mute. Key: live level, tap to mute",
+      "States": [
+        {
+          "Image": "static/track.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad",
+        "Knob"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Track Switcher",
+      "UUID": "com.diy.obs.switcher",
+      "Icon": "static/list-switcher.png",
+      "Tooltip": "Pick an OBS audio input. Knob: turn to pick, press to mute it. Key: tap for the next one, hold to mute",
+      "States": [
+        {
+          "Image": "static/switcher.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad",
+        "Knob"
+      ],
+      "SupportedInMultiActions": false,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Duo Meter",
+      "UUID": "com.diy.obs.duo",
+      "Icon": "static/list-duo.png",
+      "Tooltip": "Two audio inputs on one key with live levels. Tap mutes the top one, hold mutes the bottom one",
+      "States": [
+        {
+          "Image": "static/duo.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": false,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Mic Mute",
+      "UUID": "com.diy.obs.mic",
+      "Icon": "static/list-mic.png",
+      "Tooltip": "Mute or unmute a microphone in OBS",
+      "States": [
+        {
+          "Image": "static/mic.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Stream",
+      "UUID": "com.diy.obs.stream",
+      "Icon": "static/list-stream.png",
+      "Tooltip": "Tap to go live, hold to stop. Shows time on air, bitrate and dropped frames",
+      "States": [
+        {
+          "Image": "static/stream.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Record",
+      "UUID": "com.diy.obs.record",
+      "Icon": "static/list-record.png",
+      "Tooltip": "Tap to start, tap again to pause or resume, hold to stop",
+      "States": [
+        {
+          "Image": "static/record.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Scene",
+      "UUID": "com.diy.obs.scene",
+      "Icon": "static/list-scene.png",
+      "Tooltip": "Switch to a scene, or up to 4 scenes in turn. In Studio Mode a tap sends it to preview, a second tap puts it on air; hold cuts straight to air",
+      "States": [
+        {
+          "Image": "static/scene.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Scene Switcher",
+      "UUID": "com.diy.obs.scenesw",
+      "Icon": "static/list-scenesw.png",
+      "Tooltip": "Pick a scene. Knob: turn to pick, press to put it on air. Key: shows the pick, tap to put it on air",
+      "States": [
+        {
+          "Image": "static/scenesw.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad",
+        "Knob"
+      ],
+      "SupportedInMultiActions": false,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Source Visibility",
+      "UUID": "com.diy.obs.source",
+      "Icon": "static/list-source.png",
+      "Tooltip": "Show or hide a source in a scene",
+      "States": [
+        {
+          "Image": "static/source.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Virtual Camera",
+      "UUID": "com.diy.obs.vcam",
+      "Icon": "static/list-vcam.png",
+      "Tooltip": "Start or stop the OBS virtual camera",
+      "States": [
+        {
+          "Image": "static/vcam.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Replay Buffer",
+      "UUID": "com.diy.obs.replay",
+      "Icon": "static/list-replay.png",
+      "Tooltip": "Tap to save the replay (or start the buffer), hold to stop it",
+      "States": [
+        {
+          "Image": "static/replay.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Screenshot",
+      "UUID": "com.diy.obs.screenshot",
+      "Icon": "static/list-screenshot.png",
+      "Tooltip": "Save a screenshot of the program scene to the recording folder",
+      "States": [
+        {
+          "Image": "static/screenshot.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Studio Mode",
+      "UUID": "com.diy.obs.studio",
+      "Icon": "static/list-studio.png",
+      "Tooltip": "Turn Studio Mode on or off",
+      "States": [
+        {
+          "Image": "static/studio.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": true,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    },
+    {
+      "Name": "Stats",
+      "UUID": "com.diy.obs.stats",
+      "Icon": "static/list-stats.png",
+      "Tooltip": "FPS, CPU and dropped frames",
+      "States": [
+        {
+          "Image": "static/stats.png",
+          "ShowTitle": false
+        }
+      ],
+      "Controllers": [
+        "Keypad"
+      ],
+      "SupportedInMultiActions": false,
+      "UserTitleEnabled": false,
+      "DisableAutomaticStates": true,
+      "PropertyInspectorPath": "propertyInspector/index.html"
+    }
+  ],
+  "SDKVersion": 3,
+  "Author": "cherry-terry",
+  "Name": "OBS Deck",
+  "Icon": "static/plugin.png",
+  "CategoryIcon": "static/plugin.png",
+  "Category": "OBS Deck",
+  "CodePathWin": "plugin/index.js",
+  "Description": "OBS Studio on your Stream Dock: knobs for every audio track with live meters, stream and record with on-air frames, scenes, virtual camera, replay and more. Uses the WebSocket server built into OBS 28+",
+  "Version": "1.0.0",
+  "URL": "https://github.com/cherry-terry",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Software": {
+    "MinimumVersion": "3.10.188.226"
+  },
+  "Nodejs": {
+    "Version": "20"
+  }
+}

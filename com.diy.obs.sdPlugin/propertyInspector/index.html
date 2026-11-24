@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --text:#d6d6d6; --sub:#8e8e8e; --field:#3a3a3a; --line:#4a4a4a; --accent:#4ea1ff; --ok:#3ddc5a; --bad:#ff6b61; --warn:#ffcf6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:10px 12px 14px; font:12px/1.45 "Segoe UI", Arial, sans-serif; color:var(--text); background:transparent; }
+  h2 { margin:0; font-size:13px; font-weight:600; }
+  .sub { color:var(--sub); font-size:11px; margin:1px 0 6px; }
+  label.f { display:block; color:var(--sub); margin:10px 0 4px; }
+  select, input[type=text], input[type=password], input[type=number] { width:100%; height:26px; padding:0 6px; color:var(--text); background:var(--field); border:1px solid var(--line); border-radius:4px; font:inherit; }
+  .row2 { display:grid; grid-template-columns:1fr 84px; gap:8px; }
+  .btn { width:100%; height:28px; margin-top:10px; color:#fff; background:var(--accent); border:1px solid var(--accent); border-radius:4px; font:inherit; font-weight:600; cursor:pointer; }
+  .section { margin-top:16px; padding-top:10px; border-top:1px solid var(--line); }
+  .section > summary { cursor:pointer; color:var(--sub); font-size:11px; letter-spacing:.04em; text-transform:uppercase; list-style:none; display:flex; align-items:center; gap:6px; }
+  .section > summary::-webkit-details-marker { display:none; }
+  .status { display:flex; align-items:center; gap:6px; margin-top:8px; }
+  .dot { width:8px; height:8px; border-radius:50%; flex:none; background:var(--sub); }
+  .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.wait { background:var(--warn); }
+  .hint { color:var(--sub); font-size:11px; margin:8px 0 0; }
+  .checks { margin-top:4px; max-height:180px; overflow:auto; border:1px solid var(--line); border-radius:4px; padding:4px 6px; }
+  .checks label { display:flex; align-items:center; gap:6px; margin:3px 0; }
+  .empty { color:var(--sub); margin:6px 0; }
+  .foot { margin-top:18px; padding-top:8px; border-top:1px solid var(--line); color:var(--sub); font-size:11px; display:flex; justify-content:space-between; align-items:center; opacity:.8; }
+  .foot a { color:var(--sub); text-decoration:none; }
+  .foot a:hover { color:var(--text); text-decoration:underline; }
+  button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+
+<section id="main">
+  <div data-for="track">
+    <h2>Track Volume</h2>
+    <p class="sub">Knob: turn to change the volume, press to mute. Key: live level, tap to mute. Pick <b>Follow Track Switcher</b> to control whatever the Track Switcher has picked.</p>
+    <label class="f" for="input">Audio input</label>
+    <select id="input" data-key="input"></select>
+    <div class="row2">
+      <div><label class="f" for="style">Look</label><select id="style" data-key="style"><option value="bars">Bar meter</option><option value="vu">Analog VU meter</option></select></div>
+      <div><label class="f" for="step">Knob step</label><select id="step" data-key="step"><option value="1">1 dB</option><option value="2">2 dB</option><option value="3">3 dB</option><option value="5">5 dB</option></select></div>
+    </div>
+    <label class="f" for="icon">Icon</label>
+    <select id="icon" data-key="icon"></select>
+  </div>
+
+  <div data-for="switcher">
+    <h2>Track Switcher</h2>
+    <p class="sub">Knob: turn to pick an input, press to mute it. Key: tap for the next input, hold to mute. Track Volume set to <b>Follow Track Switcher</b> controls the picked input.</p>
+    <label class="f">Inputs to cycle through (none ticked = all)</label>
+    <div class="checks" id="swList"></div>
+    <label class="f" for="swStyle">Look</label>
+    <select id="swStyle" data-key="style"><option value="bars">Bar meter</option><option value="vu">Analog VU meter</option></select>
+  </div>
+
+  <div data-for="duo">
+    <h2>Duo Meter</h2>
+    <p class="sub">Two inputs on one key. Tap mutes the top one, hold mutes the bottom one. The row lights up while its knob turns.</p>
+    <label class="f" for="a">Top</label><select id="a" data-key="a"></select>
+    <label class="f" for="b">Bottom</label><select id="b" data-key="b"></select>
+  </div>
+
+  <div data-for="mic">
+    <h2>Mic Mute</h2>
+    <p class="sub">A tap mutes or unmutes the input in OBS. When muted, the key gets a red frame and says MIC OFF.</p>
+    <label class="f" for="micInput">Microphone</label><select id="micInput" data-key="input"></select>
+  </div>
+
+  <div data-for="stream"><h2>Stream</h2><p class="sub">Tap to go live. Hold for half a second to stop, so a stray tap never ends the stream.</p></div>
+  <div data-for="record"><h2>Record</h2><p class="sub">Tap to start, tap again to pause or resume. Hold to stop.</p></div>
+
+  <div data-for="scene">
+    <h2>Scene</h2>
+    <p class="sub">Tap switches to the scene. In Studio Mode a tap puts it in preview and a second tap sends it on air. Hold cuts straight to air.</p>
+    <label class="f" for="scene">Scene</label><select id="scene" data-key="scene"></select>
+    <label class="f">More scenes on this key (optional). A tap moves to the next one; dots show which is on air.</label>
+    <div><select id="more0" data-more="0"></select></div>
+    <div style="margin-top:6px"><select id="more1" data-more="1"></select></div>
+    <div style="margin-top:6px"><select id="more2" data-more="2"></select></div>
+  </div>
+
+  <div data-for="scenesw">
+    <h2>Scene Switcher</h2>
+    <p class="sub">Knob: turn to pick a scene, press to put it on air (Studio Mode: preview first, press again to go live). Key: shows the pick, tap to put it on air, hold to cut straight to air.</p>
+    <label class="f">Scenes to cycle through (none ticked = all)</label>
+    <div class="checks" id="scList"></div>
+  </div>
+
+  <div data-for="source">
+    <h2>Source Visibility</h2>
+    <p class="sub">Tap shows or hides a source in a scene.</p>
+    <label class="f" for="srcScene">Scene</label><select id="srcScene" data-key="scene"></select>
+    <label class="f" for="source">Source</label><select id="source" data-key="source"></select>
+  </div>
+
+  <div data-for="vcam"><h2>Virtual Camera</h2><p class="sub">Tap starts or stops the OBS virtual camera. While it runs the icon glows blue.</p></div>
+  <div data-for="replay"><h2>Replay Buffer</h2><p class="sub">Tap saves the last seconds (or starts the buffer). Hold stops it. Turn the buffer on in OBS: Settings, Output, Replay Buffer.</p></div>
+  <div data-for="screenshot"><h2>Screenshot</h2><p class="sub">Tap saves a PNG of the program scene to your OBS recording folder.</p></div>
+  <div data-for="studio"><h2>Studio Mode</h2><p class="sub">Tap turns Studio Mode on or off. Scene keys then show LIVE and NEXT.</p></div>
+  <div data-for="stats"><h2>Stats</h2><p class="sub">OBS frame rate, CPU use and dropped frames, updated every 2 seconds.</p></div>
+</section>
+
+<details class="section" id="connBox">
+  <summary><span class="dot" id="cDot"></span><span>OBS connection</span></summary>
+  <div class="status"><span id="cText"></span></div>
+  <div class="row2">
+    <div><label class="f" for="host">Address</label><input type="text" id="host" placeholder="127.0.0.1" spellcheck="false"></div>
+    <div><label class="f" for="port">Port</label><input type="number" id="port" placeholder="4455" min="1" max="65535"></div>
+  </div>
+  <label class="f" for="password">Password</label>
+  <input type="password" id="password" placeholder="Leave empty if authentication is off" autocomplete="off">
+  <button class="btn" id="connect">Save and connect</button>
+  <p class="hint">In OBS: Tools, WebSocket Server Settings. Tick Enable WebSocket server, then Show Connect Info for the port and password. Shared by all OBS Deck keys.</p>
+</details>
+
+<footer class="foot">
+  <span>&copy; 2026 cherry-terry</span>
+  <a href="#" id="gh">github.com/cherry-terry</a>
+</footer>
+
+<script>
+const DEFAULTS = {
+  track: { input:'', style:'bars', icon:'auto', step:1 },
+  switcher: { inputs:[], style:'bars' },
+  duo: { a:'', b:'' },
+  mic: { input:'' },
+  scene: { scene:'', more:[] },
+  scenesw: { scenes:[] },
+  source: { scene:'', source:'' },
+};
+const ICONS = { auto:'Automatic', mic:'Microphone', game:'Game', music:'Music', bell:'Alerts', desktop:'Desktop', chat:'Voice chat', speaker:'Speaker' };
+const GITHUB = 'https://github.com/cherry-terry';
+let ws, uuid, action, kind, settings = {};
+let st = { conn:{ host:'127.0.0.1', port:4455, password:'', status:'connecting', error:'' }, inputs:[], scenes:[] };
+let sources = { scene:'', list:[] };
+let connDirty = false;
+const $ = id => document.getElementById(id);
+
+function connectElgatoStreamDeckSocket(port, inUUID, registerEvent, info, actionInfo) {
+  uuid = inUUID;
+  try { const a = JSON.parse(actionInfo); action = a.action; settings = (a.payload && a.payload.settings) || {}; } catch (_) {}
+  kind = (action || '').split('.').pop();
+  settings = Object.assign({}, DEFAULTS[kind] || {}, settings);
+  ws = new WebSocket('ws://127.0.0.1:' + port);
+  ws.onopen = () => { ws.send(JSON.stringify({ event: registerEvent, uuid })); toPlugin({ type:'hello' }); };
+  ws.onmessage = e => {
+    const m = JSON.parse(e.data);
+    if (m.event === 'didReceiveSettings' && m.payload) { settings = Object.assign({}, DEFAULTS[kind] || {}, m.payload.settings || {}); render(); }
+    if (m.event === 'sendToPropertyInspector' && m.payload) {
+      if (m.payload.type === 'state') { st = m.payload; render(); }
+      if (m.payload.type === 'sources') { sources = { scene: m.payload.scene, list: m.payload.sources || [] }; renderSources(); }
+    }
+  };
+  setup(); render();
+}
+const connectSocket = connectElgatoStreamDeckSocket;
+const toPlugin = payload => ws && ws.readyState === 1 && ws.send(JSON.stringify({ event:'sendToPlugin', action, context: uuid, payload }));
+function save() {
+  if (!ws || ws.readyState !== 1) return;
+  ws.send(JSON.stringify({ event:'setSettings', context: uuid, payload: settings }));
+  toPlugin({ type:'settings', settings });
+}
+
+function fill(sel, items, value, extra) {
+  sel.innerHTML = '';
+  (extra || []).forEach(([v, t]) => sel.add(new Option(t, v)));
+  items.forEach(n => sel.add(new Option(n, n)));
+  if (value && ![...sel.options].some(o => o.value === value)) sel.add(new Option(value + ' (not in OBS)', value));
+  sel.value = value == null ? '' : String(value);
+}
+function setup() {
+  document.querySelectorAll('[data-for]').forEach(el => { el.hidden = !el.dataset.for.split(' ').includes(kind); });
+  document.querySelectorAll('#main [data-key]').forEach(el => el.addEventListener('change', () => {
+    if (el.closest('[data-for]').hidden) return;
+    const k = el.dataset.key;
+    settings[k] = k === 'step' ? +el.value : el.value;
+    if (kind === 'source' && k === 'scene') { settings.source = ''; toPlugin({ type:'sources', scene: el.value }); }
+    save();
+  }));
+  document.querySelectorAll('[data-more]').forEach(el => el.addEventListener('change', () => {
+    const more = (settings.more || []).slice(0, 3);
+    while (more.length < 3) more.push('');
+    more[+el.dataset.more] = el.value;
+    settings.more = more.filter(Boolean);
+    save(); render();
+  }));
+  ['host','port','password'].forEach(id => $(id).addEventListener('input', () => { connDirty = true; }));
+  $('connect').addEventListener('click', () => {
+    connDirty = false;
+    toPlugin({ type:'connection', host: $('host').value.trim() || '127.0.0.1', port: +$('port').value || 4455, password: $('password').value });
+  });
+  $('gh').addEventListener('click', e => {
+    e.preventDefault();
+    if (ws && ws.readyState === 1) ws.send(JSON.stringify({ event:'openUrl', payload:{ url: GITHUB } }));
+  });
+  if (kind === 'source' && settings.scene) toPlugin({ type:'sources', scene: settings.scene });
+}
+
+function render() {
+  const names = (st.inputs || []).map(i => i.name), scenes = st.scenes || [];
+  if (kind === 'track') {
+    fill($('input'), names, settings.input, [['', 'First audio input'], ['@switcher', 'Follow Track Switcher']]);
+    $('style').value = settings.style || 'bars';
+    $('step').value = String(settings.step || 1);
+    const ic = $('icon'); ic.innerHTML = '';
+    Object.entries(ICONS).forEach(([k, v]) => ic.add(new Option(v, k)));
+    ic.value = settings.icon || 'auto';
+  }
+  if (kind === 'switcher') {
+    checks($('swList'), names, 'inputs', 'Connect to OBS to see its audio inputs.');
+    $('swStyle').value = settings.style || 'bars';
+  }
+  if (kind === 'duo') {
+    fill($('a'), names, settings.a, [['', 'First audio input']]);
+    fill($('b'), names, settings.b, [['', 'Second audio input']]);
+  }
+  if (kind === 'mic') fill($('micInput'), names, settings.input, [['', 'Choose an input']]);
+  if (kind === 'scene') {
+    fill($('scene'), scenes, settings.scene, [['', 'Choose a scene']]);
+    const more = settings.more || [];
+    for (let i = 0; i < 3; i++) fill($('more' + i), scenes, more[i] || '', [['', i === 0 ? 'None' : 'None']]);
+  }
+  if (kind === 'scenesw') checks($('scList'), scenes, 'scenes', 'Connect to OBS to see its scenes.');
+  if (kind === 'source') { fill($('srcScene'), scenes, settings.scene, [['', 'Choose a scene']]); renderSources(); }
+
+  const c = st.conn || {};
+  if (!connDirty) { $('host').value = c.host || '127.0.0.1'; $('port').value = c.port || 4455; $('password').value = c.password || ''; }
+  const dot = $('cDot');
+  dot.className = 'dot ' + (c.status === 'connected' ? 'ok' : c.status === 'error' ? 'bad' : 'wait');
+  $('cText').textContent = c.status === 'connected' ? 'Connected to OBS' : c.status === 'error' ? (c.error || 'Not connected') + '. Retrying every 3 s.' : 'Connecting…';
+  if (c.status !== 'connected') $('connBox').open = true;
+}
+function checks(box, names, key, emptyText) {
+  const chosen = new Set(settings[key] || []);
+  box.innerHTML = names.length ? '' : '<p class="empty">' + emptyText + '</p>';
+  names.forEach(n => {
+    const l = document.createElement('label'), c = document.createElement('input');
+    c.type = 'checkbox'; c.checked = chosen.has(n);
+    c.addEventListener('change', () => {
+      const set = new Set(settings[key] || []);
+      c.checked ? set.add(n) : set.delete(n);
+      settings[key] = names.filter(x => set.has(x));
+      save();
+    });
+    l.append(c, document.createTextNode(n)); box.append(l);
+  });
+}
+function renderSources() {
+  if (kind !== 'source') return;
+  const list = sources.scene === settings.scene ? sources.list : [];
+  fill($('source'), list, settings.source, [['', settings.scene ? 'Choose a source' : 'Choose a scene first']]);
+}
+</script>
+</body>
+</html>
