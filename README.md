@@ -4,7 +4,7 @@ OBS Studio on the Ajazz AKP03E (and other Stream Dock devices): knobs for every 
 
 It talks to the WebSocket server built into OBS 28 and newer and follows OBS events, so the keys stay right even when you click things in OBS itself. If OBS closes, the keys turn grey and the plugin reconnects on its own.
 
-<p align="center"><img src="obs-steam-deck-social-banner.jpg" width="420" alt="OBS Deck on an AKP03E"></p>
+<p align="center"><img src="obs-steam-deck-social-banner.jpg" width="1280" alt="OBS Deck on an AKP03E"></p>
 
 ## Contents
 
